@@ -45,7 +45,7 @@ BUNDLE_METADATA_OPTS ?= $(BUNDLE_CHANNELS) $(BUNDLE_DEFAULT_CHANNEL)
 #
 # For example, running 'make bundle-build bundle-push catalog-build catalog-push' will build and push both
 # backube/volsync-bundle:$VERSION and backube/volsync-catalog:$VERSION.
-IMAGE_TAG_BASE ?= quay.io/backube/volsync
+IMAGE_TAG_BASE ?= docker.io/akash5474/volsync
 
 # BUNDLE_IMG defines the image:tag used for the bundle.
 # You can use it as an arg. (E.g make bundle-build BUNDLE_IMG=<some-registry>/<project-name-bundle>:<tag>)
@@ -63,7 +63,7 @@ ifeq ($(USE_IMAGE_DIGESTS), true)
 endif
 
 # Image URL to use all building/pushing image targets
-IMG ?= quay.io/backube/volsync:latest
+IMG ?= docker.io/akash5474/volsync:latest
 
 # Get the currently used golang install path (in GOPATH/bin, unless GOBIN is set)
 ifeq (,$(shell go env GOBIN))
