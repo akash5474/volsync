@@ -59,10 +59,8 @@ COPY /mover-restic/restic ./restic
 COPY /mover-restic/minio-go ./minio-go
 
 WORKDIR /workspace/restic
-ENV GOOS=${TARGETOS:-linux}
-ENV GOARCH=${TARGETARCH}
 
-RUN go run build.go
+RUN go run build.go --goos linux --goarch arm64 build
 
 
 ######################################################################
