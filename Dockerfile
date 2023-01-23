@@ -11,6 +11,8 @@ ARG TARGETOS
 ARG TARGETARCH
 ENV GOOS=${TARGETOS:-linux}
 ENV GOARCH=${TARGETARCH}
+# ENV GOOS=linux
+# ENV GOARCH=arm64
 
 
 ######################################################################
@@ -58,7 +60,7 @@ COPY /mover-restic/minio-go ./minio-go
 
 WORKDIR /workspace/restic
 
-RUN go run build.go
+RUN go run build.go --goos linux --goarch arm64
 
 
 ######################################################################
@@ -74,7 +76,8 @@ WORKDIR /workspace/syncthing
 # Make sure we have the correct Syncthing release
 RUN /bin/bash -c "[[ $(git rev-list -n 1 HEAD) == ${SYNCTHING_GIT_HASH} ]]"
 
-RUN go run build.go -no-upgrade
+RUN go run build.go -no-upgrade --goos linux --goarch arm64 build
+RUN ls
 
 
 ######################################################################
@@ -139,7 +142,7 @@ COPY /mover-rsync-tls/client.sh \
 RUN chmod a+rx /mover-rsync-tls/*.sh
 
 ##### syncthing
-COPY --from=syncthing-builder /workspace/syncthing/bin/syncthing /usr/local/bin/syncthing
+COPY --from=syncthing-builder /workspace/syncthing/syncthing /usr/local/bin/syncthing
 ENV SYNCTHING_DATA_TRANSFERMODE="sendreceive"
 COPY /mover-syncthing/config-template.xml \
      /mover-syncthing/

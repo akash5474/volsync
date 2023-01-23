@@ -16,8 +16,8 @@ env:
   GO_VERSION: "1.19"
   KIND_VERSION: "0.17.0"
   GO111MODULE: "on"
-  OPERATOR_IMAGE: "quay.io/backube/volsync"
-  CUSTOM_SCORECARD_IMAGE: "quay.io/backube/volsync-custom-scorecard-tests"
+  OPERATOR_IMAGE: "docker.io/akash5474/volsync"
+  CUSTOM_SCORECARD_IMAGE: "docker.io/akash5474/volsync-custom-scorecard-tests"
   DOCKER_BUILDKIT: "1"
 
 jobs:
@@ -158,8 +158,11 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c  # v3.3.0
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
       - name: Build operator container
-        run: make docker-build IMG=${OPERATOR_IMAGE}
+        run: make docker-buildx IMG=${OPERATOR_IMAGE} REGISTRY_PASSWORD=${{ secrets.REGISTRY_PASSWORD }}
 
       - name: Export container image
         run: docker save -o /tmp/image.tar ${OPERATOR_IMAGE}
@@ -405,7 +408,7 @@ jobs:
     uses: ./.github/workflows/registry-push.yml
     with:
       artifact-name: volsync-operator
-      image-name: quay.io/backube/volsync
+      image-name: docker.io/akash5474/volsync
     secrets:
       registry-username: ${{ secrets.REGISTRY_USERNAME }}
       registry-password: ${{ secrets.REGISTRY_PASSWORD }}
@@ -416,7 +419,7 @@ jobs:
     uses: ./.github/workflows/registry-push.yml
     with:
       artifact-name: volsync-custom-scorecard-tests-container
-      image-name: quay.io/backube/volsync-custom-scorecard-tests
+      image-name: docker.io/akash5474/volsync-custom-scorecard-tests
     secrets:
       registry-username: ${{ secrets.REGISTRY_USERNAME }}
       registry-password: ${{ secrets.REGISTRY_PASSWORD }}
