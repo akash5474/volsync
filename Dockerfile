@@ -60,7 +60,7 @@ COPY /mover-restic/minio-go ./minio-go
 
 WORKDIR /workspace/restic
 
-RUN go run build.go --goos linux --goarch arm64 build
+RUN go run build.go --goos linux --goarch arm64
 
 
 ######################################################################
