@@ -9,10 +9,10 @@ ENV GO111MODULE=on
 ENV CGO_ENABLED=0
 ARG TARGETOS
 ARG TARGETARCH
-# ENV GOOS=${TARGETOS:-linux}
-# ENV GOARCH=${TARGETARCH}
-ENV GOOS=linux
-ENV GOARCH=arm64
+ENV GOOS=${TARGETOS:-linux}
+ENV GOARCH=${TARGETARCH}
+# ENV GOOS=linux
+# ENV GOARCH=arm64
 
 
 ######################################################################
