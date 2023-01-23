@@ -162,7 +162,7 @@ jobs:
         uses: docker/setup-qemu-action@v1
 
       - name: Build operator container
-        run: make docker-buildx IMG=${OPERATOR_IMAGE}
+        run: make docker-buildx IMG=${OPERATOR_IMAGE} REGISTRY_PASSWORD=${{ secrets.REGISTRY_PASSWORD }}
 
       - name: Export container image
         run: docker save -o /tmp/image.tar ${OPERATOR_IMAGE}
